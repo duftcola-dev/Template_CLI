@@ -1,12 +1,7 @@
 import click
-import os
-from procedure.procedure_generator import Procedures
-
-#cli files path
-conf_path=os.getcwd()+"/cli/conf/conf.json"
-logs_path=os.getcwd()+"/cli/logs/logs.txt"
-#deppendencies
-procedures = Procedures(conf_path,logs_path)
+from settings.settings import DjangoDefaultTemplate
+from settings.logging import Log    
+l=Log()
 
 @click.group()
 def cli():
@@ -14,24 +9,27 @@ def cli():
 
 
 @click.command()
-def dep():
-    """Update deppendencies list
+def create_project():
+    """Create project eskeleton
     """
-    procedures.update_deppendencies()
+    l.log("Creating project",0,True)
+    error=DjangoDefaultTemplate().init("test_project",["test","users","stores"])
+
 
 @click.command()
-def logs():
+def build_project():
     """Commands related to the logs file
     """
-    procedures.flush_logs()
+    print("Building project")
 
 @click.command()
-def init():
-    pass
+def deploy_project():
+    print("Deploying project")
 
 
 @click.command()
-def flush():
+def delete_project():
+    print("Deleting project")
     # log("ATTENTION","","red",True,False)
     # log("The following action will delete content.","red","",False,False)
     # log("Mapping content ...","red","",False,False)
@@ -40,8 +38,8 @@ def flush():
     pass
 
 if __name__ == "__main__":
-    cli.add_command(init)
-    cli.add_command(flush)
-    cli.add_command(dep)
-    cli.add_command(logs)
+    cli.add_command(create_project)
+    cli.add_command(build_project)
+    cli.add_command(deploy_project)
+    cli.add_command(delete_project)
     cli()
