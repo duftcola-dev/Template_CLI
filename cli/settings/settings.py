@@ -72,3 +72,13 @@ class DjangoDefaultTemplate:
             "touch docker/docker-compose.yml",
         ]
         return commands
+
+
+    def __CreateApplications(self,applications:list):
+        commands=[]
+
+        for application in applications:
+            commands.append(f"django-admin startapp {application} applications/{application}")
+        
+        for application in applications:
+            commands.append(f"touch applications/{application}/urls.py")

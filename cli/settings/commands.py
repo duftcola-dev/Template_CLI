@@ -40,7 +40,7 @@ class Commands(Log):
         try:
             with click.progressbar(commands,length=len(commands)) as execute_commands:
                 for command in execute_commands:
-                    result=os.system(command+" >/dev/null 2>&1")
+                    result=os.system(command)
                     self.last_command=command
                     if result != 0:
                         return None,Error(command)
