@@ -1,6 +1,6 @@
 import click
-from templates.django_default_template import DjangoDefaultTemplate
-from templates.utils.logging import Log    
+from blueprints.DjangoDefaultTemplate.django_default_template import DjangoDefaultTemplate
+from blueprints.utils.logging import Log    
 l=Log()
 
 @click.group()
@@ -24,7 +24,7 @@ def create_project(type:str,name:str,app:str):
 
         example : \n 
 
-        python cli -t default_app -n myproject -a app1,app2,app3
+        python cli --type default_app --name myproject --app app1,app2,app3
     """
     if type:
         print(type)

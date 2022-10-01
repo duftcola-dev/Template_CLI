@@ -78,7 +78,7 @@ class Commands(Log):
             return False,Error(f"Error: {err}")
     
 
-    def InsertText(self,file_path:str,text:list):
+    def InsertText(self,file_path:str,text:str):
         """Insert data/text into the selected file
 
         Args:
