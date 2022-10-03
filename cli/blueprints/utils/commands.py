@@ -53,7 +53,7 @@ class Commands(Log):
             return None,Error(message)
            
 
-    def Insert(self,file_path:str,lines:list)->Tuple[bool,Error]:
+    def InsertLines(self,file_path:str,lines:list,context:str=None)->Tuple[bool,Error]:
         """Insert content into files.
 
         Args:
@@ -68,12 +68,25 @@ class Commands(Log):
             return False,Error(f"The file {file_path} cannot be found or was not created.")
         try:
             file = open(file_path,"a")
-            for line in lines:
-                file.write(line)
-            file.close()
-            return True,None
+            with click.progressbar(lines,len(lines),context) as lines:
+                for line in lines:
+                    file.write(line)
+                file.close()
+                return True,None
         except Exception as err :
             self.log(f"Unknown exception : {err}",3)
             return False,Error(f"Error: {err}")
+    
+
+    def InsertText(self,file_path:str,text:str):
+        """Insert data/text into the selected file
+
+        Args:
+            file_path (str): Path to file where data will be inserted
+            text (list): Data/text to be inserted
+        """
+        file=open(file_path,"w")
+        file.write(text)
+        file.close()
 
         

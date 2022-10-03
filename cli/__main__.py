@@ -1,6 +1,6 @@
 import click
-from settings.settings import DjangoDefaultTemplate
-from settings.logging import Log    
+from blueprints.DjangoDefaultTemplate.django_default_template import DjangoDefaultTemplate
+from blueprints.utils.logging import Log    
 l=Log()
 
 @click.group()
@@ -9,11 +9,34 @@ def cli():
 
 
 @click.command()
-def create_project():
-    """Create project eskeleton
+@click.option("-t","--type",required=True,default="default",type=str)
+@click.option("-n","--name",required=False,default="project",type=str)
+@click.option("-a","--app",required=False,default="myapp",type=str)
+def create_project(type:str,name:str,app:str):
+    """ - create-project \n
+    Create a project eskeleton by selecting a project type, a project name 
+    and the number of applications that project supports.
+    Some project support only one application.\n
+    Arguments :\n 
+        * -t | --type  <project_type> \n
+        * -n | --name  <project_name> | default : project \n
+        * -a | --app  <applications> | default : myapp  \n 
+
+        example : \n 
+
+        python cli --type default_app --name myproject --app app1,app2,app3
     """
+    if type:
+        print(type)
+    if name:
+        print(name)
+    if app:
+        print(app)
+
     l.log("Creating project",0,True)
-    error=DjangoDefaultTemplate().init("test_project",["test","users","stores"])
+    app=app.split(",")
+    print(app)
+    error=DjangoDefaultTemplate().init(name,app)
 
 
 @click.command()
